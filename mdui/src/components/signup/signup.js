@@ -8,7 +8,6 @@ export default class Signup extends Component {
 
     constructor(){
         super();
-
         this.state = {
             name: null,
             email:null,
@@ -20,7 +19,6 @@ export default class Signup extends Component {
       }
     
        setvalue(e){
-           console.log(e.target.value);
         this.setState({
             [e.target.id]:e.target.value
         })
@@ -32,15 +30,16 @@ export default class Signup extends Component {
            email: this.state.email,
            username: this.state.username,
            password:this.state.password
-    
         })
-        .then(res => {
+        .then(res => { 
+          console.log(res)       
           if(res.data.message === undefined){
             alert("order placed successfully");
           }
           else{
             alert(res.data.message);
           }
+          this.history.push('/login')
         })
         .catch(err => {
             console.log(err);
