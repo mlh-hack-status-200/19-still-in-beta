@@ -48,7 +48,7 @@ router.get('/products-not-picked', (req, res) => {
 })
 
 //orders by User email
-router.get('/all-orders', (req, res) => {
+router.post('/all-orders', (req, res) => {
     var email = req.body.email
     Order.find({ email: email }, (err, prod) => {
         if (err) {
@@ -59,7 +59,7 @@ router.get('/all-orders', (req, res) => {
     })
 })
 
-router.get('/orders-delivered', (req, res) => {
+router.post('/orders-delivered', (req, res) => {
     var email = req.body.email
     Order.find({ email: email, status_reciever: 1, status_dropper: 1 }, (err, prod) => {
         if (err) {
@@ -70,7 +70,7 @@ router.get('/orders-delivered', (req, res) => {
     })
 })
 
-router.get('/orders-not-delivered', (req, res) => {
+router.post('/orders-not-delivered', (req, res) => {
     var email = req.body.email
     Order.find({ email: email, status_reciever: 0, status_dropper: 0 }, (err, prod) => {
         if (err) {
@@ -82,20 +82,20 @@ router.get('/orders-not-delivered', (req, res) => {
 })
 
 //order delivered confirmation
-router.get('/order-delivered-confirmation',(req,res)=>{
+router.post('/order-delivered-confirmation', (req, res) => {
     // var email=req.body.email;
-    var product_code=req.body.product_code;
+    var product_code = req.body.product_code;
 
-    Order.find({ product_code:product_code, status_reciever: 1, status_dropper: 1 }, (err, prod) => {
+    Order.find({ product_code: product_code, status_reciever: 1, status_dropper: 1 }, (err, prod) => {
         if (err) {
             res.send(err)
         } else {
             console.log(prod)
-            if(prod==undefined || prod==null || prod.length==0){
-                res.json({msg:'Not Delivered.',success:false});
+            if (prod == undefined || prod == null || prod.length == 0) {
+                res.json({ msg: 'Not Delivered.', success: false });
             }
-            else{
-                res.json({msg:'Delivered.',success:true});
+            else {
+                res.json({ msg: 'Delivered.', success: true });
             }
         }
     })
